@@ -14,7 +14,6 @@ class StatServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
     }
 
     /**
