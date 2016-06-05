@@ -8,7 +8,7 @@ class Metric extends Ancestor {
 
 	public $template = 'metric.phtml';
 
-	public $width = [3,3,6,12];
+	public $width = [3,6,6,12];
 
 	public $change = 30;
 
