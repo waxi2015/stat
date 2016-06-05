@@ -1,0 +1,11 @@
+<script type="text/javascript">
+	$('#chart').waxisstat('chart', {
+		data: [
+			<? foreach($this->getData() as $row): ?>[<? foreach($row as $data): echo (is_string($data)?"'$data',":"$data,"); endforeach; ?>],<? endforeach; ?>
+		],
+		chartTitle: '<?=$this->getChartTitle()?>',
+		barWidth: '<?=$this->getBarWidth()?>',
+		showEvery: '<?=$this->getShowEvery()?>',
+		format: '<?=$this->getFormat()?>',
+	});
+</script>

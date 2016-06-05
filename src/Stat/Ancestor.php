@@ -10,6 +10,8 @@ class Ancestor {
 
 	public $template = null;
 	
+	public $id = null;
+
 	public $descriptor = null;
 
 	public function __construct ($descriptor) {
@@ -21,9 +23,17 @@ class Ancestor {
 			$this->template = $descriptor['template'];
 		}
 
+		if (isset($descriptor['id'])) {
+			$this->id = $descriptor['id'];
+		}
+
 		if ($this->descriptor === null) {
 			$this->descriptor = $descriptor;
 		}
+	}
+
+	public function getId () {
+		return $this->id;
 	}
 
 	public function getDescriptor () {
@@ -52,7 +62,7 @@ class Ancestor {
 		echo $this->fetch($template);
 	}
 
-	public function fetch ($template = false) {
+	public function fetch ($template = null) {
 
 		ob_start();
 		include($this->getTemplate($template));
@@ -63,8 +73,8 @@ class Ancestor {
 	}
 
 	# Bit messy but needed
-	public function getTemplate ($template = false) {
-		if (!$template) {
+	public function getTemplate ($template = null) {
+		if ($template === null) {
 			$template = $this->template;
 		}
 
@@ -73,13 +83,13 @@ class Ancestor {
 		# ha van megadva template directory, akkor abban keressen elsősorban
 		if ($this->templateDirectory !== null) {
 			$paths = [
-				$this->templateDirectory . '/' . $this->getType() . '/' $template,
-				$this->templateDirectory . '/' $template,
+				$this->templateDirectory . '/' . $this->getType() . '/' . $template,
+				$this->templateDirectory . '/' . $template,
 			];
 		}
 
 		# utána nézze meg először a projekt könyvtárában, hogy van e egyedi view
-		$paths[] = resource_path('views/stat/') . $this->getType() . '/' $template;
+		$paths[] = resource_path('views/stat/') . $this->getType() . '/' . $template;
 		$paths[] = resource_path('views/stat/') . $template;
 
 		# ha semmi nincs, akkor használja az alapértelmezettet
@@ -89,7 +99,7 @@ class Ancestor {
 		foreach ($paths as $path) {
 			if (file_exists($path)) {
 				$pathToTemplate = $path;
-				exit;
+				break;
 			}
 		}
 

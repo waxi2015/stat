@@ -6,7 +6,7 @@ class Stat extends Stat\Ancestor {
 
 	public $type = 'stat';
 
-	public $template = 'stat.blade.php';
+	public $template = 'stat.phtml';
 
 	public function __construct ($descriptor) {
 		if (is_string($descriptor)) {
@@ -26,9 +26,25 @@ class Stat extends Stat\Ancestor {
 				case 'metrics':
 					$stats[] = new \Waxis\Stat\Stat\Metrics($stat);
 					break;
+					
+				case 'chart':
+					$stats[] = new \Waxis\Stat\Stat\Chart($stat);
+					break;
 			}
 		}
 
 		return $stats;
+	}
+
+	public function getStat ($id) {
+		$stats = $this->getStats();
+
+		foreach ($stats as $stat) {
+			if ($stat->getId() == $id) {
+				return $stat;
+			}
+		}
+
+		return false;
 	}
 }

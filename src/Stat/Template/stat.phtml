@@ -1,0 +1,7 @@
+<div class="wax-stat">
+	<? foreach ($this->getStats() as $stat): ?>
+		<?=$stat->render()?>
+	<? endforeach ?>
+	<?=csrf_field()?>
+	<input type="hidden" name="statDescriptor" value="<?=encode(serialize($this->getDescriptor()))?>" />
+</div>

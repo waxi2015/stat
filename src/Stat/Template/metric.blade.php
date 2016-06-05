@@ -1,8 +1,0 @@
-<div{{$this->getClass()}}>
-	<div>
-		<b>{{$this->getValue()}}</b>
-		<i><span class="fa fa-arrow-up"></span> {{$this->getIncrease()}}%</i>
-		<p>{{$this->getLabel()}}</p>
-		<span class="bg-icon fa fa-{{$this->getIcon()}}"></span>
-	</div>
-</div>

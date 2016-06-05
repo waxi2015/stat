@@ -6,7 +6,7 @@ class Metrics extends Ancestor {
 
 	public $type = 'metrics';
 
-	public $template = 'metrics.blade.php';
+	public $template = 'metrics.phtml';
 
 	public $metrics = [];
 

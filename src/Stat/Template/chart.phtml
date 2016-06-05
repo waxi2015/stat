@@ -1,0 +1,25 @@
+<div class="row wax-stat-chart-container">
+	<div class="col-lg-12">
+		<h2 class="dropdown">
+			<a href="" class="dropdown-toggle" data-toggle="dropdown">
+				<span class="chart-title" data-source="<?=$this->getSource(true)?>"><?=$this->getLabel()?></span> <span class="fa fa-caret-down"></span>
+			</a>
+			<ul class="dropdown-menu">
+				<? foreach ($this->getSources() as $source => $details): ?>
+				    <li><a href="<?=$source?>"><?=$details['label']?></a></li>
+				<? endforeach; ?>
+			</ul>
+		</h2>
+		<div class="filters">
+			<a href="" class="date-back"><span class="fa fa-chevron-left"></span></a>
+			<input class="date-year" value="<?=date('Y')?>">
+			<input class="date-month" value="<?=date('m')?>">
+			<a href="" class="date-next"><span class="fa fa-chevron-right"></span></a>
+			<a href="month" class="type-month period-selector active">Month</a>
+			<a href="year" class="type-year period-selector">Year</a>
+		</div>
+		<div class="wax-stat-chart" id="chart"></div>
+	</div>
+</div>
+
+<?$this->renderJavascript()?>
