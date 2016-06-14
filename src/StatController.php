@@ -16,6 +16,10 @@ class StatController extends Controller
 	}
 
     public function chart (Request $request) {
+    	if (!\Auth::guard('admin')->check()) {
+    		\App::abort(403, 'Unauthorized action.');
+    	}
+
     	$descriptor = unserialize(decode($request->descriptor));
 		$id = $request->id;
 		$source = $request->source;
