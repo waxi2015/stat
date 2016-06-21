@@ -17,6 +17,10 @@ class StatServiceProvider extends ServiceProvider
         if (! $this->app->routesAreCached()) {
             require __DIR__.'/routes.php';
         }
+
+        $this->publishes([
+            __DIR__.'/assets' => resource_path('assets/common/libs/stat'),
+        ]);
     }
 
     /**
