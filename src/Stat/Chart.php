@@ -114,6 +114,10 @@ class Chart extends Ancestor {
 		return $this->getSource()['table'];
 	}
 
+	public function getWhere () {
+		return isset($this->getSource()['where']) ? $this->getSource()['where'] : null;
+	}
+
 	public function getLabel () {
 		return $this->getSource()['label'];
 	}
@@ -194,12 +198,19 @@ class Chart extends Ancestor {
 
 	public function getDataByYear () {
 		$table = $this->getTable();
+		$where = $this->getWhere();
 
 		$query = \DB::table($table)
 					->where('created_at', '!=', "0000-00-00 00:00:00")
 					->whereNotNull('created_at')
 					->groupBy(\DB::raw('YEAR(created_at)'))
 					->orderBy(\DB::raw('YEAR(created_at)'), 'ASC');
+
+		if ($where !== null) {
+			foreach ($where as $one) {
+				$query->whereRaw($one);
+			}
+		}
 
 		$sum = $this->getSum();
 		if ($sum) {
@@ -247,6 +258,7 @@ class Chart extends Ancestor {
 		$year = $this->getYear();
 		$month = $this->getMonth();
 		$table = $this->getTable();
+		$where = $this->getWhere();
 
 		$monthString = (string)$month;
 		if ($month < 10) {
@@ -260,6 +272,12 @@ class Chart extends Ancestor {
 					->where('created_at', '<=', "$year-$monthString-$days")
 					->groupBy(\DB::raw('DATE(created_at)'));
 
+		if ($where !== null) {
+			foreach ($where as $one) {
+				$query->whereRaw($one);
+			}
+		}
+
 		$beforeQuery = \DB::table($table)
 					->where('created_at', '<', "$year-$monthString-01");
 
@@ -270,6 +288,12 @@ class Chart extends Ancestor {
 		} else {
 			$query->select(\DB::raw('DATE(created_at) as date'), \DB::raw('COUNT(*) AS count'));
 			$beforeQuery->select(\DB::raw('COUNT(*) AS count'));
+		}
+
+		if ($where !== null) {
+			foreach ($where as $one) {
+				$beforeQuery->whereRaw($one);
+			}
 		}
 
 		$db = to_array($query->get());
