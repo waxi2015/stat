@@ -1,0 +1,7 @@
+<script type="text/javascript">
+	$('#<?=$this->getId()?>').waxisstat('simple-bars', {
+		data: [
+			<? foreach($this->getData() as $row): ?>[<? foreach($row as $data): echo (is_string($data)?"'$data',":"$data,"); endforeach; ?>],<? endforeach; ?>
+		]
+	});
+</script>

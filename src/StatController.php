@@ -21,24 +21,39 @@ class StatController extends Controller
     	}
 
     	$descriptor = unserialize(decode($request->descriptor));
-		$id = $request->id;
-		$source = $request->source;
-		$year = $request->year;
-		$month = $request->month;
-		$period = $request->period;
 
 		$stat = new \Stat($descriptor);
-		$chart = $stat->getStat($id)
-					 ->setSource($source)
-					 ->setYear($year)
-					 ->setMonth($month)
-					 ->setPeriod($period);
 
-		$response['data'] = $chart->getData();
-		$response['chartTitle'] = $chart->getChartTitle();
-		$response['barWidth'] = $chart->getBarWidth();
-		$response['showEvery'] = $chart->getShowEvery();
-		$response['format'] = $chart->getFormat();
+    	switch ($stat->getType()) {
+    		case 'chart':
+    			$id = $request->id;
+				$source = $request->source;
+				$year = $request->year;
+				$month = $request->month;
+				$period = $request->period;
+
+				$chart = $stat->getStat($id)
+							 ->setSource($source)
+							 ->setYear($year)
+							 ->setMonth($month)
+							 ->setPeriod($period);
+
+				$response['data'] = $chart->getData();
+				$response['chartTitle'] = $chart->getChartTitle();
+				$response['barWidth'] = $chart->getBarWidth();
+				$response['showEvery'] = $chart->getShowEvery();
+				$response['format'] = $chart->getFormat();
+    			break;
+
+    		case 'simple-bars':
+    			$id = $request->id;
+
+				$simpleBars = $stat->getStat($id);
+
+				$response['data'] = $simpleBars->getData();
+    			break;
+    	}
+		
 
 		return $response;
 	}

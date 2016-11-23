@@ -30,6 +30,10 @@ class Stat extends Stat\Ancestor {
 				case 'chart':
 					$stats[] = new \Waxis\Stat\Stat\Chart($stat);
 					break;
+					
+				case 'simple-bars':
+					$stats[] = new \Waxis\Stat\Stat\SimpleBars($stat);
+					break;
 			}
 		}
 
