@@ -51,6 +51,8 @@ class StatController extends Controller
 				$simpleBars = $stat->getStat($id);
 
 				$response['data'] = $simpleBars->getData();
+				$response['colors'] = $simpleBars->getColors();
+				$response['height'] = $simpleBars->getHeight();
     			break;
     	}
 		

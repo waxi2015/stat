@@ -8,11 +8,17 @@ class SimpleBars extends Ancestor {
 
 	public $template = 'simple-bars.phtml';
 
+	public $height = 220;
+	
 	public $days = 7;
 
 	public $sources = null;
 
 	public function __construct($descriptor) {
+		if (isset($descriptor['height'])) {
+			$this->height = $descriptor['height'];
+		}
+
 		if (isset($descriptor['days'])) {
 			$this->days = $descriptor['days'];
 		}
@@ -30,6 +36,19 @@ class SimpleBars extends Ancestor {
 
 	public function getSources () {
 		return $this->sources;
+	}
+
+	public function getHeight () {
+		return $this->height;
+	}
+
+	public function getColors () {
+		$colors = [];
+		foreach ($this->getSources() as $one) {
+			$colors[] = $one['color'];
+		}
+
+		return $colors;
 	}
 
 	public function getData () {
