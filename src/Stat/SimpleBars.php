@@ -78,7 +78,7 @@ class SimpleBars extends Ancestor {
 
 			foreach ($allSourceData as $one) {
 				if (array_key_exists($date, $one)) {
-					$data[$k][] = $one[$date];
+					$data[$k][] = (int) $one[$date];
 				} else {
 					$data[$k][] = 0;
 				}
