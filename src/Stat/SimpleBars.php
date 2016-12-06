@@ -97,6 +97,10 @@ class SimpleBars extends Ancestor {
 					->groupBy(\DB::raw('DATE(created_at)'));
 
 		if (isset($source['where'])) {
+			if (!is_array($source['where'])) {
+				$source['where'] = [$source['where']];
+			}
+
 			foreach ($source['where'] as $one) {
 				$query->whereRaw($one);
 			}
