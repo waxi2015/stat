@@ -21,11 +21,22 @@ class StatController extends Controller
     	}
 
     	$descriptor = unserialize(decode($request->descriptor));
-
 		$stat = new \Stat($descriptor);
 
+
+		$response = [];
     	switch ($stat->getType()) {
-    		case 'chart':
+    		case 'simple-bars':
+    			$id = $request->id;
+
+				$simpleBars = $stat->getStat($id);
+
+				$response['data'] = $simpleBars->getData();
+				$response['colors'] = $simpleBars->getColors();
+				$response['height'] = $simpleBars->getHeight();
+    			break;
+    			
+    		default:
     			$id = $request->id;
 				$source = $request->source;
 				$year = $request->year;
@@ -43,16 +54,6 @@ class StatController extends Controller
 				$response['barWidth'] = $chart->getBarWidth();
 				$response['showEvery'] = $chart->getShowEvery();
 				$response['format'] = $chart->getFormat();
-    			break;
-
-    		case 'simple-bars':
-    			$id = $request->id;
-
-				$simpleBars = $stat->getStat($id);
-
-				$response['data'] = $simpleBars->getData();
-				$response['colors'] = $simpleBars->getColors();
-				$response['height'] = $simpleBars->getHeight();
     			break;
     	}
 		
